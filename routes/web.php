@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () 
+{
     return view('welcome');
 });
 
 Auth::routes();
+Route::get('/QrLogin', ['uses' => 'App\Http\Controllers\QrLoginController@index']);
+Route::get('/QrLogin', ['uses' => 'App\Http\Controllers\QrLoginController@checkUser']);
+
+Route::get('/QrLogin', [App\Http\Controllers\QrLoginController::class, 'index'])->name('QrLogin');
+Route::post('/QrLogin', [App\Http\Controllers\QrLoginController::class, 'checkUser'])->name('QrLogin');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
